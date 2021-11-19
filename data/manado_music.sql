@@ -28,7 +28,7 @@ CREATE TABLE `jenis` (
   `keterangan` text NOT NULL,
   `aktivasi` char(30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,6 @@ CREATE TABLE `jenis` (
 
 LOCK TABLES `jenis` WRITE;
 /*!40000 ALTER TABLE `jenis` DISABLE KEYS */;
-INSERT INTO `jenis` VALUES (1,'Gitar','Alat musik petik','Aktif'),(2,'Drum','Drum adalah kelompok alat musik perkusi yang terdiri dari kulit yang direntangkan dan dipukul dengan tangan atau sebuah batang. Selain kulit, drum juga digunakan dari bahan lain, misalnya plastik. Drum terdapat di seluruh dunia dan memiliki banyak jenis, misalnya kendang, timpani, Bodhr&aacute;n, Ashiko, snare drum, bass drum, tom-tom, beduk, dan lain-lain.\r\n\r\nDalam musik pop, rock, dan jazz, drums biasanya mengacu kepada drum kit atau drum set, yaitu sekelompok drum yang biasanya terdiri dari snare drum, tom-tom, bass drum, cymbal, hi-hat, dan kadang ditambah berbagai alat musik drum listrik. Orang yang memainkan drum set disebut &quot;drummer&quot;.\r\n','Aktif');
 /*!40000 ALTER TABLE `jenis` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,4 +209,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-19 10:10:42
+-- Dump completed on 2021-11-19 10:34:56
