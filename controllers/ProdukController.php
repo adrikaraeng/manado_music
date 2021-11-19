@@ -57,6 +57,7 @@ class ProdukController extends Controller
      * @param integer $id
      * @return mixed
      */
+    //Fungsi untuk view detail produk
     public function actionView($id)
     {
         if (Yii::$app->user->isGuest):
@@ -76,6 +77,7 @@ class ProdukController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
+    //Fungsi untuk save produk baru
     public function actionCreate()
     {
         if (Yii::$app->user->isGuest):
@@ -89,7 +91,7 @@ class ProdukController extends Controller
 
             $gambar = UploadedFile::getInstances($model,'gambar');
             $model->tanggal_input = date('Y-m-d H:i:s');
-            $model->satuan = "2";
+            $model->satuan = "1";
             $model->save(false);
             if($gambar != NULL):
                 $i=1;

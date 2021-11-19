@@ -49,9 +49,22 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
         ?>
     </p>
-    <?php foreach($gambar as $g => $gbr):?>
-        <img src='<?php echo Yii::$app->request->baseUrl; ?>/gambar/produk/<?php echo $gbr->gambar;?>' class='ft-form-produk'">
-    <?php endforeach;?>
+    <div class="row">
+      <div class="col-md-12">
+        <?php foreach($gambar as $g => $gbr):?>
+          <?php
+            $path = Yii::$app->request->baseUrl."/gambar/produk/".$gbr->gambar;
+            $file_parts = pathinfo($path);
+            if($file_parts['extension'] == "mp4"):?>
+              <video  class='ft-form-produk' controls>
+                <source src="<?=$path?>" type="video/mp4">
+              </video>
+          <?php  else: ?>
+              <img src='<?php echo Yii::$app->request->baseUrl; ?>/gambar/produk/<?php echo $gbr->gambar;?>' class='ft-form-produk'>
+          <?php endif;?>
+        <?php endforeach;?>
+      </div>
+    </div>
 
     <?= DetailView::widget([
         'model' => $model,
@@ -65,17 +78,16 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'satuan',
                 'format' => 'raw',
-                'value' => $model->satuan0->satuan,  
-            ],
-            [
-                'attribute' => 'harga_pokok',
-                'format' => 'raw',
-                'value' => "Rp ".number_format($model->harga_pokok,0,',','.'),
+                'value' => function($model){
+                    return $model->satuan0->satuan;
+                },  
             ],
             [
                 'attribute' => 'harga_jual',
                 'format' => 'raw',
-                'value' => "Rp ".number_format($model->harga_jual,0,',','.'),
+                'value' => function($model){
+                  return "Rp ".number_format($model->harga_jual,0,',','.');
+                },
             ],
             'barcode:ntext',
             [
@@ -83,8 +95,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw'
             ],
             'aktivasi:ntext',
-            'diskon_jumlah_beli',
-            'free_diskon',
             'tanggal_input'
         ],
     ]) ?>

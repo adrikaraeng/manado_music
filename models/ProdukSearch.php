@@ -18,8 +18,8 @@ class ProdukSearch extends Produk
     public function rules()
     {
         return [
-            [['id', 'jenis', 'satuan', 'berat', 'diskon_jumlah_beli', 'free_diskon'], 'integer'],
-            [['nama', 'harga_pokok', 'barcode', 'harga_jual', 'deskripsi', 'aktivasi', 'tanggal_input'], 'safe'],
+            [['id', 'jenis', 'satuan', 'berat'], 'integer'],
+            [['nama', 'barcode', 'harga_jual', 'deskripsi', 'aktivasi', 'tanggal_input'], 'safe'],
         ];
     }
 
@@ -63,13 +63,10 @@ class ProdukSearch extends Produk
             'nama' => $this->nama,
             'jenis' => $this->jenis,
             'satuan' => $this->satuan,
-            'berat' => $this->berat,
-            'diskon_jumlah_beli' => $this->diskon_jumlah_beli,
-            'free_diskon' => $this->free_diskon,
+            'berat' => $this->berat
         ]);
 
-        $query->andFilterWhere(['like', 'harga_pokok', $this->harga_pokok])
-            ->andFilterWhere(['like', 'barcode', $this->barcode])
+        $query->andFilterWhere(['like', 'barcode', $this->barcode])
             ->andFilterWhere(['like', 'harga_jual', $this->harga_jual])
             ->andFilterWhere(['like', 'deskripsi', $this->deskripsi])
             ->andFilterWhere(['like', 'aktivasi', $this->aktivasi])

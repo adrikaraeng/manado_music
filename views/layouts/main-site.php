@@ -22,10 +22,10 @@ MainAsset::register($this);
             <div class="logo">
               <!-- mini logo for sidebar mini 50x50 pixels -->
               <span class="logo-mini" style="font-size:0.7em;margin-top:-10px;">
-                <b>NF</b>
+                <b>MM</b>
               </span>
               <!-- logo for regular state and mobile devices -->
-              <span class="logo-lg" style="font-size:0.95em;"><b>Nanofood Indonesia</b>
+              <span class="logo-lg" style="font-size:0.95em;"><b>MANADO MUSIC</b>
               </span>
             </div>
 
@@ -47,11 +47,11 @@ MainAsset::register($this);
                 //      'encodeLabels ' => false,
                 //      'items' => $itemsKategori,
                 // ],
-                [
-                  'label' => "<i class='fa fa-get-pocket'
-                  style='font-size:1.3em;'></i> CEK PEMESANAN",
-                  'url' => ['/site/cek-pemesanan']
-                ],
+                // [
+                //   'label' => "<i class='fa fa-get-pocket'
+                //   style='font-size:1.3em;'></i> CEK PEMESANAN",
+                //   'url' => ['/site/cek-pemesanan']
+                // ],
             ];
             echo NavX::widget([
                 'options' => ['class' => 'nav navbar-nav'],

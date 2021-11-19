@@ -22,10 +22,10 @@ MainAsset::register($this);
             <div class="logo">
               <!-- mini logo for sidebar mini 50x50 pixels -->
               <span class="logo-mini" style="font-size:0.7em;margin-top:-10px;">
-                <b>NF</b>
+                <b>MM</b>
               </span>
               <!-- logo for regular state and mobile devices -->
-              <span class="logo-lg" style="font-size:0.95em;"><b>Nanofood Indonesia</b>
+              <span class="logo-lg" style="font-size:0.95em;"><b>MANADO MUSIC</b>
               </span>
             </div>
 
@@ -47,8 +47,8 @@ MainAsset::register($this);
                 //      'encodeLabels ' => false,
                 //      'items' => $itemsKategori,
                 // ],
-                ['label' => "<i class='fa fa-shopping-bag' style='font-size:1.3em;'></i> TRANSAKSI", 'url' => ['/admin/index-admin']],
-                ['label' => "<i class='fa fa-list-alt' style='font-size:1.3em;'></i> REPORT", 'url' => ['/admin/report-admin']],
+                // ['label' => "<i class='fa fa-shopping-bag' style='font-size:1.3em;'></i> TRANSAKSI", 'url' => ['/admin/index-admin']],
+                // ['label' => "<i class='fa fa-list-alt' style='font-size:1.3em;'></i> REPORT", 'url' => ['/admin/report-admin']],
                 Yii::$app->user->isGuest ? (
                     ['label' => 'LOGIN', 'url' => ['/site/login'], 'linkOptions'=>['id'=>'modalPassword']]
                 ) : (

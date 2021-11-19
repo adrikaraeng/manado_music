@@ -13,12 +13,22 @@ use yii\base\Model;
 class SearchPForm extends Model
 {
     public $search;
+    public $filterSelect;
+    public $min;
+    public $max;
+    // public $lates;
+    // public $longest;
+    // public $atoz;
+    // public $ztoa;
+    // public $expensive;
+    // public $inexpensive;
 
     public function rules()
     {
         return [
             // username and password are both required
-            [['search'], 'string'],
+            [['search','filterSelect'], 'string'],
+            [['max', 'min'], 'integer'],
         ];
     }
 
@@ -26,6 +36,9 @@ class SearchPForm extends Model
     {
         return [
             'search' => Yii::t('app', 'Search'),
+            'filterSelect' => Yii::t('app', 'Filter Select'),
+            'max' => Yii::t('app', 'Maximum'),
+            'min' => Yii::t('app', 'Minimum'),
         ];
     }
 }

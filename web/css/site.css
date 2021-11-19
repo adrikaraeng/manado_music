@@ -2,6 +2,29 @@ html,
 body {
     height: 100%;
 }
+#update-active a:link,
+#update-active a:visited,
+#update-active a:hover,
+#update-active a:active
+{
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+}
+#wa-cek-barang a:link,
+#wa-cek-barang a:visited,
+#wa-cek-barang a:hover,
+#wa-cek-barang a:active
+{
+  color: #000000;
+  text-decoration: none;
+}
+#wa-cek-barang{
+  width: 100%;
+  bottom:0;
+  left:0;
+  position: absolute;
+}
 
 .menu-side{
     position:fixed;
@@ -86,10 +109,10 @@ body {
     width:100%;
 }
 .keranjang-view{
-    width:100%;
-    margin:0 auto;
-    padding-top:10px;
-    padding-bottom:10px;
+  width:100%;
+  margin:0 auto;
+  padding-top:10px;
+  padding-bottom:10px;
 }
 
 .skitter-large-box {
@@ -152,17 +175,19 @@ body {
 }
 .view-gambar-produk-all{
     clear:left;
-    max-width: 300px;
+    /* max-width: 400px; */
+    max-height: 700px;
     width:100%;
 }
 .ft-view-produk{
     width:100%;
-    max-width: 300px;
+    max-width: 500px;
+    height: 600px;
     clear:left;
     margin-bottom: 5px;
 }
 .ft-site-view-produks{
-    max-width:65px;
+    width: 90px;
     max-height: 100px;
     height:100%;
     clear:left;
@@ -184,17 +209,17 @@ body {
     z-index: 99;
 }
 .ft-site-produk{
-    width:195px;
+    /* max-width:200px; */
+    width:100%;
     margin-top:-5px;
     margin-left:-5px;
-    height: auto;
-    max-height: 250px;
+    height: 250px;
 }
 
 .view-desc-produk{
     position: absolute;
     margin-top: 30px;
-    bottom:10px;
+    bottom:30px;
 }
 
 ul.ul-produk li .head-produk{
@@ -275,17 +300,23 @@ ul.pagination li.next{
 .ft-rm-form-produk{
     position: absolute;
     text-align: left;
+    clear:left;
+    margin-left:-30px;
 }
 .ft-rm-form-produk:hover{
     color: #d20010;
 }
 .form-produk-foto{
     float: left;
+    margin-left:20px;
 }
 .ft-form-produk{
-    height: 200px;
-    width: auto;
+    height: 300px;
+    width: 200px;
     padding:5px;
+    float:left;
+    margin-left:10px;
+    border: 0.5px solid #d8d8d8;
 }
 .gbr-produk-sml{
     height:20px;
@@ -297,7 +328,7 @@ ul.pagination li.next{
 .my-content{
     padding-left:10px;
     padding-right:10px;
-    padding-top:70px;
+    padding-top:60px;
     padding-bottom:5px;
     height: 100%;
 }
@@ -559,7 +590,7 @@ a.desc:after {
     ul.ul-produk li
     {
         border-radius: 5px;
-        width:125px;
+        width:150px;
         max-height: 400px;
         min-height: 260px;
         height: 100%;
@@ -571,7 +602,8 @@ a.desc:after {
         padding:8px;
     }
     .ft-site-produk{
-        width:120px;
+        max-width:120px;
+        width: 100%;
         margin-top:-5px;
         margin-left:-5px;
         height: auto;

@@ -69,6 +69,14 @@ class KontakController extends Controller
         $model = new Kontak();
 
         if ($model->load(Yii::$app->request->post())) {
+            $kontak = $_POST['Kontak']['kontak'];
+            $jenis_kontak = "<span class='fa fa-whatsapp'> Whatsapp</span>";
+            if(substr($kontak, 0,1) == '0' && $_POST['Kontak']['jenis_kontak'] == $jenis_kontak){
+                $kontak = "62".substr($kontak,1);
+            }elseif(substr($kontak, 0,1) == '+' && $_POST['Kontak']['jenis_kontak'] == $jenis_kontak){
+                $kontak = substr($kontak,1);
+            }
+            $model->kontak = $kontak;
             if($model->save()):
                 echo 1;
             else:

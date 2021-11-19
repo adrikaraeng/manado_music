@@ -14,8 +14,6 @@ use yii\helpers\Url;
 
 $connection = \Yii::$app->db;
 $now = date('Y-m-d H:i:s');
-$delTransaksi = $connection->createCommand("DELETE FROM transaksi WHERE status='Booking' AND tanggal_expired < '$now' OR status='Diproses' AND tanggal_expired < '$now'")->execute();
-$delKonfirmasi = $connection->createCommand("DELETE FROM konfirmasi WHERE status='Booking1' AND tanggal_expired < '$now' OR status='Booking2' AND tanggal_expired < '$now'")->execute();
 
 AppAsset::register($this);
 
@@ -37,64 +35,59 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 <div class="wrapper">
 
-    <?= $this->render("//layouts/admin-main")?>
+  <?= $this->render("//layouts/admin-main")?>
 
-    <div class="fixed-sidebar">
-        <aside class="main-sidebar">
-        <section class="sidebar">
-          <ul class="sidebar-menu">
-            <li class="header">
-                <span class="sidebar-header" style="color:#fff;font-weight:bold;"><?=Yii::t('app','PENGATURAN')?></span>
-            </li>
+  <div class="fixed-sidebar">
+    <aside class="main-sidebar">
+      <section class="sidebar">
+        <ul class="sidebar-menu">
+          <li class="header">
+            <span class="sidebar-header" style="color:#fff;font-weight:bold;"><?=Yii::t('app','PENGATURAN')?></span>
+          </li>
 
-            <li>
-                <?=Html::a('<i class="fa fa-laptop text-aqua"></i> <span class="text-aqua">'.Yii::t('app','PRODUK').'</span>', 
-                    Url::toRoute(['/produk/index'])
-                );?>
-            </li>
-            <li>
-                <?=Html::a('<i class="fa fa-database text-aqua"></i> <span class="text-aqua">'.Yii::t('app','KATEGORI').'</span>', 
-                    Url::toRoute(['/jenis/index'])
-                );?>
-            </li>
-            <li>
-                <?=Html::a('<i class="fa fa-building text-white"></i> <span class="text-white">'.Yii::t('app','BANK').'</span>', 
-                    Url::toRoute(['/bank/index'])
-                );?>
-            </li>
-            <li>
-                <?=Html::a('<i class="fa fa-cc text-yellow"></i> <span class="text-yellow">'.Yii::t('app','KONTAK').'</span>', 
-                    Url::toRoute(['/kontak/index'])
-                );?>
-            </li>
-            <li>
-                <?=Html::a('<i class="fa fa-home text-blue"></i> <span class="text-blue">'.Yii::t('app','PROFIL').'</span>', 
-                    Url::toRoute(['/profil/index'])
-                );?>
-            </li>
-            <li>
-                <?=Html::a('<i class="fa fa-unlock text-red"></i> <span class="text-red">'.Yii::t('app','GANTI PASSWORD').'</span>', 
-                    Url::toRoute(['/admin/change-password'])
-                );?>
-            </li>
+          <li>
+            <?=Html::a('<i class="fa fa-database text-green"></i> <span class="text-green">'.Yii::t('app','KATEGORI').'</span>', 
+              Url::toRoute(['/jenis/index'])
+            );?>
+          </li>
+          <li>
+            <?=Html::a('<i class="fa fa-laptop text-aqua"></i> <span class="text-aqua">'.Yii::t('app','PRODUK').'</span>', 
+              Url::toRoute(['/produk/index'])
+            );?>
+          </li>
+          <li>
+            <?=Html::a('<i class="fa fa-cc text-yellow"></i> <span class="text-yellow">'.Yii::t('app','KONTAK').'</span>', 
+              Url::toRoute(['/kontak/index'])
+            );?>
+          </li>
+          <li>
+            <?=Html::a('<i class="fa fa-building text-white"></i> <span class="text-white">'.Yii::t('app','PROFIL').'</span>', 
+              Url::toRoute(['/profil/index'])
+            );?>
+          </li>
+          <li>
+            <?=Html::a('<i class="fa fa-lock text-red"></i> <span class="text-red">'.Yii::t('app','GANTI PASSWORD').'</span>', 
+              Url::toRoute(['/admin/change-password'])
+            );?>
+          </li>
 
-          </ul>
-        </section>
-        </aside>
-    </div>
+        </ul>
+      </section>
+    </aside>
+  </div>
 
-    <div class="content-wrapper">
-        <div class="my-content">
-            <?= $content ?>
-        </div>
-    </div>
-    <div id="footer">
-        <footer class="main-footer">
+  <div class="content-wrapper">
+      <div class="my-content">
+          <?= $content ?>
+      </div>
+  </div>
+  <div id="footer">
+      <footer class="main-footer">
 
-                <strong><b>Nanofood Indonesia</b> &copy; 2020</strong>
-                
-        </footer>
-    </div>
+              <strong><b>MANADO MUSIC</b> &copy; 2021</strong>
+              
+      </footer>
+  </div>
 </div>
 
 <?php $this->endBody() ?>

@@ -19,8 +19,6 @@ use yii\widgets\Pjax;
 
 $connection = \Yii::$app->db;
 $now = date('Y-m-d H:i:s');
-$delTransaksi = $connection->createCommand("DELETE FROM transaksi WHERE status='Booking1' AND tanggal_expired < '$now' OR status='Booking2' AND tanggal_expired < '$now'")->execute();
-$delKonfirmasi = $connection->createCommand("DELETE FROM konfirmasi WHERE status='Booking1' AND tanggal_expired < '$now' OR status='Booking2' AND tanggal_expired < '$now'")->execute();
 
 AppAsset::register($this);
 
@@ -37,10 +35,6 @@ foreach ($kategori as $mj => $m):
     ];
 endforeach;
 $ip = Yii::$app->getRequest()->getUserIP();
-$count_keranjang = (new yii\db\Query())
-            ->from('transaksi')
-            ->where("ip = '$ip' AND status='Booking1'")
-            ->count();
 ?>
 
 <?php $this->beginPage() ?>
@@ -67,15 +61,6 @@ $count_keranjang = (new yii\db\Query())
           <ul class="sidebar-menu">
 
             <li style="white-space: normal">
-                <?=Html::a('<i class="fa fa-shopping-cart text-white" style="font-size:1.2em;"></i> <span>'.Yii::t('app',"Daftar Belanja").'</span>', 
-                        Url::toRoute(['lihat-keranjang'])
-                    );?>
-                <?php Pjax::begin(['id'=>'count-keranjang','enablePushState'=>false]); ?>
-                    <span class="label label-danger pull-right" style="z-index:99;position:absolute;margin-top:-30px;right:0;"><?=$count_keranjang?></span>
-                <?php Pjax::end();?>
-            </li>
-
-            <li style="white-space: normal">
                 <?=Html::a('<i class="fa fa-home text-white" style="font-size:1.2em;"></i> <span>'.Yii::t('app',"Home").'</span>', 
                         Url::toRoute(['index'])
                     );?>
@@ -100,27 +85,17 @@ $count_keranjang = (new yii\db\Query())
         <div class="my-content">
             <?= $content ?>
         </div>
-        <?php Pjax::begin(['id'=>'keranjang-pesan','enablePushState'=>false]); ?>
-            <?php if($count_keranjang != 0):?>
-                <?= Html::a("<span class='fa fa-shopping-cart' style='color:#f9f79b;font-size:1.3em;'></span> <span style='font-size:1.4em;'>".$count_keranjang."</span>", Url::to(['lihat-keranjang']), [
-                            'title' => Yii::t('app', 'Periksa Keranjang'),
-                            'data-pjax' => 0,
-                            'class' => 'btn btn-danger', 'style' => 'right:10px;bottom:10px;position:fixed;z-index:99;float:right;padding:5px;'
-                    ]);
-                ?>
-            <?php endif;?>
-        <?php Pjax::end();?>
     </div>
     <div id="footer">
         <footer class="main-footer">
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-8">
                         <p style="font-weight:bold;text-transform:uppercase;">Profil kami</p>
                         <?php foreach($profil as $p => $pr):?>
                             <p><?=$pr->tentang?></p>
                         <?php endforeach;?>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <p style="font-weight:bold;text-transform:uppercase;">Kontak kami</p>
                         <table style="width:100%;">
                             <?php foreach($kontak as $k => $kk):?>
@@ -130,7 +105,7 @@ $count_keranjang = (new yii\db\Query())
                             </tr>
                             <?php endforeach;?>
                         </table>
-                        <strong><p style="color:#00930b;text-align:left;"><b>Nanofood Indonesia</b> &copy; 2020</p></strong>
+                        <strong><p style="color:#00930b;text-align:left;"><b>MANADO MUSIC</b> &copy; 2021</p></strong>
                     </div>
                 </div>                
         </footer>

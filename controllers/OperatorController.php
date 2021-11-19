@@ -13,7 +13,6 @@ use yii\filters\AccessControl;
 
 use app\models\User;
 use app\models\User2;
-use app\models\Report;
 use app\models\UserSearch;
 use app\models\Konfirmasi2;
 use app\models\KonfirmasiSearch;

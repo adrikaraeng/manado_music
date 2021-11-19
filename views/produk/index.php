@@ -43,10 +43,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 }*/
             ],
             [
-                'attribute' => 'harga_pokok',
+                'attribute' => 'jenis',
                 'format' => 'raw',
                 'value' => function($model){
-                    return "Rp <span style='float:right;'>".number_format($model->harga_pokok,0,',','.')."</span>";
+                    return $model->jenis0->jenis;
                 }
             ],
             [
@@ -60,21 +60,6 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'deskripsi:ntext',
             // 'gambar:ntext',
             // 'aktivasi:ntext',
-            [
-                'attribute' => 'diskon_jumlah_beli',
-                'header' => 'Diskon',
-                'filter' => false,
-                'format' => 'raw',
-                'value' => function($model){
-                    $beli = $model->diskon_jumlah_beli;
-                    $gratis = $model->free_diskon;
-                    if($beli != NULL && $gratis != NULL && $beli != 0 && $gratis != 0 && $gratis != '' && $beli != ''):
-                        return "<span style='font-weight:bold;'> Beli ".$beli." Gratis ".$gratis."</span>";
-                    else:
-                        return "<i>Tidak diskon</i>";
-                    endif;
-                }
-            ],
             // 'diskon_jumlah_beli',
             // 'free_diskon',
 
