@@ -81,7 +81,7 @@ $ip = Yii::$app->getRequest()->getUserIP();
                 'namaztoa' => 'Z to A',
             ], ['prompt' => 'Sorting'])->label(false) ?>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4" style="text-align:right;">
             <?= Html::submitButton(Yii::t('app', '<span class="fa fa-search" style="font-size:15px;padding:4px;padding-bottom:8px;padding-top:5px;"></span>')) ?>
           </div>
         </div>

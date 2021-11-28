@@ -147,6 +147,30 @@ class SiteController extends Controller
 
         if($model2->load(Yii::$app->request->post())):
             $search = $_POST['SearchPForm']['search'];
+            
+            $min = 0;
+            $max = 9999999999999;
+            
+            $postSort = $_POST['SearchPForm']['filterSelect'];
+            if($postSort == "terbaru"):
+              $sort = "id DESC";
+            elseif($postSort == "terlama"):
+              $sort = "id ASC";
+            elseif($postSort == "termurah"):
+              $sort = "harga_jual ASC";
+            elseif($postSort == "termahal"):
+              $sort = "harga_jual DESC";
+            elseif($postSort == "namaatoz"):
+              $sort = "nama ASC";
+            elseif($postSort == "namaztoa"):
+              $sort = "nama DESC";
+            else:
+              $sort = "id DESC";
+            endif;
+
+            $filterMin = isset($_POST['SearchPForm']['min']) ? $_POST['SearchPForm']['min'] : $min;
+            $filterMax = isset($_POST['SearchPForm']['max']) ? $_POST['SearchPForm']['max'] : $max;
+            $filterSort = 
             $query = Produk::find();
 
             $pagination = new Pagination([
@@ -154,17 +178,26 @@ class SiteController extends Controller
                 'totalCount' => $query->count(),
             ]);
             if($search != '' || $search != NULL):
-                $model = $query->orderBy('nama ASC')
-                    ->andFilterWhere(['like', 'nama', $search])
-                    ->orFilterWhere(['like', 'deskripsi', $search])
-                    //->offset($pagination->offset)
-                    ->all();
+                $model = $query->orderBy("$sort")
+                  ->andFilterWhere(['like', 'nama', $search])
+                  ->andFilterWhere(['>=', 'harga_Jual',$filterMin])
+                  ->andFilterWhere(['<=', 'harga_Jual',$filterMax])
+                  ->orFilterWhere(['like', 'deskripsi', $search])
+                  ->andFilterWhere(['>=', 'harga_Jual',$filterMin])
+                  ->andFilterWhere(['<=', 'harga_Jual',$filterMax])
+                  //->offset($pagination->offset)
+                  ->all();
                 if($model == NULL):
                     Yii::$app->session->setFlash('danger', "<span class='fa fa-close'></span> Data tidak ditemukan.");
                     return $this->refresh();
                 endif;
             else:
-                return $this->refresh();
+              $model = $query->andFilterWhere(['>=','harga_jual',$filterMin])
+              ->andFilterWhere(['<=','harga_jual',$filterMax])
+              ->orderBy("$sort")
+              //->offset($pagination->offset)
+              ->all();
+            // return $this->refresh();
             endif;
         else:
             $query = Produk::find();
@@ -172,7 +205,7 @@ class SiteController extends Controller
                 'defaultPageSize' => 12,
                 'totalCount' => $query->count(),
             ]);
-            $model = $query->orderBy('nama ASC')
+            $model = $query->orderBy('id DESC')
             ->offset($pagination->offset)
             ->limit($pagination->limit)
             ->all();
