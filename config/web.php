@@ -3,7 +3,7 @@
 $params = require(__DIR__ . '/params.php');
 
 $config = [
-    'id' => 'rumah-jali',
+    'id' => 'manado-music',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     
