@@ -263,12 +263,6 @@ ul.ul-produk li
     background-color: #fff;
     padding:8px;
 }
-ul.ul-produk li:hover,
-ul.ul-produk li:focus
-{
-    background-color: #fbfeb8;
-    cursor: pointer;
-}
 .btn-beli-index{
     width:185px;
     margin:0 auto;
