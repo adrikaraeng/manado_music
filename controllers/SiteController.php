@@ -171,7 +171,7 @@ class SiteController extends Controller
             $filterMin = isset($_POST['SearchPForm']['min']) ? $_POST['SearchPForm']['min'] : $min;
             $filterMax = isset($_POST['SearchPForm']['max']) ? $_POST['SearchPForm']['max'] : $max;
             $filterSort = 
-            $query = Produk::find();
+            $query = Produk::find()->where("aktivasi='Aktif'");
 
             $pagination = new Pagination([
                 'defaultPageSize' => 12,
@@ -201,6 +201,7 @@ class SiteController extends Controller
             endif;
         else:
             $query = Produk::find();
+            $query->where("aktivasi='Aktif'");
             $pagination = new Pagination([
                 'defaultPageSize' => 12,
                 'totalCount' => $query->count(),
