@@ -95,7 +95,7 @@ class SiteController extends Controller
 
         $model2 = new SearchPForm();
 
-        $query = Produk::find()->where("jenis='$id'");
+        $query = Produk::find()->where("jenis='$id' AND aktivasi='Aktif'");
         if($model2->load(Yii::$app->request->post())):
             $search = $_POST['SearchPForm']['search'];
 
@@ -200,8 +200,7 @@ class SiteController extends Controller
             // return $this->refresh();
             endif;
         else:
-            $query = Produk::find();
-            $query->where("aktivasi='Aktif'");
+            $query = Produk::find()->where("aktivasi='Aktif'");
             $pagination = new Pagination([
                 'defaultPageSize' => 12,
                 'totalCount' => $query->count(),
