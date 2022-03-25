@@ -38,8 +38,8 @@ class Produk extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nama', 'jenis', 'satuan', 'berat', 'harga_jual', 'tanggal_input', 'deskripsi', 'aktivasi'], 'required','message' => ''],
-            [['jenis', 'satuan', 'berat'], 'integer'],
+            [['nama', 'jenis', 'satuan', 'berat', 'harga_jual', 'tanggal_input', 'deskripsi', 'aktivasi', 'sub_kategori'], 'required','message' => ''],
+            [['jenis', 'sub_kategori', 'satuan', 'berat'], 'integer'],
             [['gambar','file'],
                 'file',
                 'extensions' => 'jpg, jpeg, png',
@@ -64,6 +64,7 @@ class Produk extends \yii\db\ActiveRecord
             'nama' => Yii::t('app', 'Nama'),
             'gambar' => Yii::t('app', 'Gambar'),
             'jenis' => Yii::t('app', 'Kategori'),
+            'sub_kategori' => Yii::t('app', 'Sub Kategori'),
             'satuan' => Yii::t('app', 'Satuan'),
             'berat' => Yii::t('app', 'Nilai Satuan'),
             'barcode' => Yii::t('app', 'Barcode'),
@@ -88,6 +89,11 @@ class Produk extends \yii\db\ActiveRecord
     public function getJenis0()
     {
         return $this->hasOne(Jenis::className(), ['id' => 'jenis']);
+    }
+
+    public function getSubKategori0()
+    {
+        return $this->hasOne(SubKategori::className(), ['id' => 'sub_kategori']);
     }
 
     /**

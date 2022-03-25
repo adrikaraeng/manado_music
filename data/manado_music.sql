@@ -77,6 +77,7 @@ CREATE TABLE `produk` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nama` varchar(200) NOT NULL,
   `jenis` int(200) NOT NULL,
+  `sub_kategori` int(200) DEFAULT NULL,
   `berat` int(10) DEFAULT NULL,
   `satuan` int(200) NOT NULL,
   `barcode` varchar(50) NOT NULL,
@@ -109,7 +110,7 @@ CREATE TABLE `produk_gambar` (
   `produk` int(200) NOT NULL,
   `gambar` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -118,6 +119,7 @@ CREATE TABLE `produk_gambar` (
 
 LOCK TABLES `produk_gambar` WRITE;
 /*!40000 ALTER TABLE `produk_gambar` DISABLE KEYS */;
+INSERT INTO `produk_gambar` VALUES (1,1,'202111201124351.jpg'),(2,1,'202111201124352.jpg'),(3,2,'202111201128461.jpg'),(4,2,'202111201128462.jpg'),(5,2,'202111201128463.jpg'),(6,2,'202111201128464.jpg'),(7,2,'202111201128465.jpg'),(8,3,'202111201132451.jpg'),(9,3,'202111201132452.jpg'),(10,3,'202111201132453.jpg');
 /*!40000 ALTER TABLE `produk_gambar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -141,7 +143,7 @@ CREATE TABLE `profil` (
 
 LOCK TABLES `profil` WRITE;
 /*!40000 ALTER TABLE `profil` DISABLE KEYS */;
-INSERT INTO `profil` VALUES (1,'<p>Toko yang menyediakan segala jenis alat-alat musik dan sound system dengan harga yang terjangkau. Beralamat di jl.Samratulangi no.45.tanjung batu, 95117 <a href=\"https://jam-buka.com/Manado/\" style=\"color:inherit;font-weight:inherit;text-decoration:inherit;\">Manado.</a><br />\r\nJam buka mingguan:</p>\r\n\r\n<ul>\r\n	<li>\r\n	<p>Senin: <span>10:00-19:00</span></p>\r\n	</li>\r\n	<li>\r\n	<p>Selasa: <span>10:00-19:00</span></p>\r\n	</li>\r\n	<li>\r\n	<p>Rabu: <span>10:00-19:00</span></p>\r\n	</li>\r\n	<li>\r\n	<p>Kamis: <span>10:00-19:00</span></p>\r\n	</li>\r\n	<li class=\"active\">\r\n	<p>Jumat (HARI INI): <span>10:00-19:00</span></p>\r\n	</li>\r\n	<li>\r\n	<p>Sabtu: <span>10:00-19:00</span></p>\r\n	</li>\r\n</ul>\r\n\r\n<p>&nbsp;</p>\r\n');
+INSERT INTO `profil` VALUES (1,'<p>Toko yang menyediakan segala jenis alat-alat musik dan sound system dengan harga yang terjangkau. Beralamat di jl.Samratulangi no.45.tanjung batu, 95117 <a href=\"https://jam-buka.com/Manado/\" style=\"color:inherit;font-weight:inherit;text-decoration:inherit;\">Manado.</a><br />\r\nJam buka mingguan:</p>\r\n\r\n<ul>\r\n	<li>\r\n	<p>Senin: <span>10:00-19:00</span></p>\r\n	</li>\r\n	<li>\r\n	<p>Selasa: <span>10:00-19:00</span></p>\r\n	</li>\r\n	<li>\r\n	<p>Rabu: <span>10:00-19:00</span></p>\r\n	</li>\r\n	<li>\r\n	<p>Kamis: <span>10:00-19:00</span></p>\r\n	</li>\r\n	<li class=\"active\">\r\n	<p>Jumat: <span>10:00-19:00</span></p>\r\n	</li>\r\n	<li>\r\n	<p>Sabtu: <span>10:00-19:00</span></p>\r\n	</li>\r\n</ul>\r\n\r\n<p>&nbsp;</p>\r\n');
 /*!40000 ALTER TABLE `profil` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,6 +170,33 @@ LOCK TABLES `satuan` WRITE;
 /*!40000 ALTER TABLE `satuan` DISABLE KEYS */;
 INSERT INTO `satuan` VALUES (1,'Gram','Gram adalah sistem metrik atau satuan dari massa. Simbol gram adalah g');
 /*!40000 ALTER TABLE `satuan` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sub_kategori`
+--
+
+DROP TABLE IF EXISTS `sub_kategori`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sub_kategori` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `jenis` int(11) DEFAULT NULL,
+  `title` varchar(30) DEFAULT NULL,
+  `keterangan` text DEFAULT NULL,
+  `aktivasi` enum('Aktif','Tidak Aktif') DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_sub_kategori_jenis` (`jenis`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sub_kategori`
+--
+
+LOCK TABLES `sub_kategori` WRITE;
+/*!40000 ALTER TABLE `sub_kategori` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sub_kategori` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -209,4 +238,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-19 10:34:56
+-- Dump completed on 2022-03-25 12:21:23

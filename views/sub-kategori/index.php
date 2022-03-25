@@ -5,21 +5,21 @@ use yii\helpers\Url;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ProdukSearch */
+/* @var $searchModel app\models\SatuanSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Produk');
+$this->title = Yii::t('app', 'Sub Kategori');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="produk-index">
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+<div class="sub-kategori-index">
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Tambah Produk'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-<?php Pjax::begin(['id'=>'pjax-produk','enablePushState'=>false]); ?>    
+
+<p>
+  <?= Html::a(Yii::t('app', 'Tambah Sub Kategori'), ['create'], ['class' => 'btn btn-success']) ?>
+</p>
+
+<?php Pjax::begin(['id' => 'pjax-sub-kategori', 'enablePushState' => false]); ?>  
     <?= GridView::widget([
-        'id' => 'produk-grid',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'rowOptions' => function($model){
@@ -32,48 +32,23 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            //'id',
             [
-                'attribute' => 'nama',
+              'attribute' => 'jenis',
+              'format' => 'raw',
+              'value' => function($model){
+                return $model->jenis0->jenis;
+              }
+            ],
+            'title',
+            [
+                'attribute' => 'keterangan',
                 'format' => 'raw',
-                /*'value' => function($model){
-                    $gambar = Html::img("@web/gambar/produk/".$model->gambar, ['class'=>'gbr-produk-sml']);
-                    $nama = $model->nama;
-                    return $gambar."<br>".$nama;
-                }*/
             ],
             [
-                'attribute' => 'jenis',
+                'attribute' => 'aktivasi',
                 'format' => 'raw',
-                'value' => function($model){
-                    return $model->jenis0->jenis;
-                }
+                'filter'=> ['Aktif'=>'Aktif','Tidak Aktif'=>'Tidak Aktif'],
             ],
-            [
-                'attribute' => 'sub_kategori',
-                'format' => 'raw',
-                'value' => function($model){
-                    if(!empty($model->sub_kategori)):
-                        return $model->subKategori0->title;
-                    else:
-                        return NULL;
-                    endif;
-                }
-            ],
-            [
-                'attribute' => 'harga_jual',
-                'format' => 'raw',
-                'value' => function($model){
-                    return "Rp <span style='float:right;'>".number_format($model->harga_jual,0,',','.')."</span>";
-                }
-            ],
-            // 'barcode:ntext',
-            // 'deskripsi:ntext',
-            // 'gambar:ntext',
-            // 'aktivasi:ntext',
-            // 'diskon_jumlah_beli',
-            // 'free_diskon',
-
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => 'Actions',

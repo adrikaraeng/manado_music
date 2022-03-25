@@ -121,7 +121,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </tr>
                 <tr class="tr-ganjil">
                     <td style="width:10%;font-weight:bold;text-transform: uppercase;">Kategori</td>
-                    <td style="width:80%;"><?=$model->jenis0->jenis?></td>
+                    <td style="width:80%;"><?=$model->jenis0->jenis?> - <?=(!empty($model->sub_kategori) ? $model->subKategori0->title : '')?></td>
                 </tr>
                 <tr class="tr-genap">
                     <td style="font-weight:bold;text-transform: uppercase;">Berat</td>

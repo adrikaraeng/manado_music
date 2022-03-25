@@ -6,6 +6,7 @@ use Yii;
 use app\models\Produk;
 use app\models\ProdukSearch;
 use app\models\ProdukGambar;
+use app\models\SubKategori;
 use app\models\ProdukGambarSearch;
 use yii\web\Controller;
 use yii\web\UploadedFile;
@@ -32,6 +33,30 @@ class ProdukController extends Controller
         ];
     }
 
+    public function actionListSubKategori(){
+      $id = $_POST['id'];
+      
+      $count = SubKategori::find()
+        ->where(['jenis' => $id, 'aktivasi' => 'Aktif'])
+        ->count();
+      $models = SubKategori::find()
+        ->where(['jenis' => $id, 'aktivasi' => 'Aktif'])
+        ->orderBy("title ASC")
+        ->all();
+      if($count > 0)
+      {
+        echo "<option value='' selected disable>Pilih Sub Kategori (*)</option>";
+        foreach ($models as $m => $model) {
+          echo "<option value='" .$model->id. "'>".$model->title."</option>";
+        }
+      }
+      else
+      {
+        echo "<option value=''></option>";
+      }
+
+    }
+    
     /**
      * Lists all Produk models.
      * @return mixed

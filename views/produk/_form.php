@@ -8,6 +8,8 @@ use dosamigos\ckeditor\CKEditor;
 use yii\helpers\ArrayHelper;
 use kartik\file\FileInput;
 use yii\db\Query;
+use app\models\SubKategori;
+
 $connection = \Yii::$app->db;
 
 /* @var $this yii\web\View */
@@ -15,6 +17,7 @@ $connection = \Yii::$app->db;
 /* @var $form yii\widgets\ActiveForm */
 $katSQL = $connection->createCommand("SELECT * FROM jenis WHERE aktivasi='Aktif' ORDER BY jenis ASC");
 $satSQL = $connection->createCommand("SELECT * FROM satuan ORDER BY satuan ASC");
+$subKatSQL = SubKategori::find()->where("aktivasi='Aktif' AND jenis='$model->jenis'")->all();
 ?>
 
 <div class="produk-form" style="background-color:#dce3ed;padding:8px;">
@@ -35,12 +38,38 @@ $satSQL = $connection->createCommand("SELECT * FROM satuan ORDER BY satuan ASC")
         <div class="col-md-6">
           <?= $form->field($model, 'nama')->textInput(['maxlength'=>40,'placeholder'=>'Nama Produk(*)'])->label(false) ?>
 
-          <?= $form->field($model, 'jenis')->dropDownList(ArrayHelper::map($katSQL->queryAll(),'id',
-            function($model, $defaultValue){
-                return $model['jenis'];
-            }), [
-            'prompt' => 'Pilih Kategori(*)',
-          ])->label(false) ?>
+          <div class="row">
+            <div class="col-md-6">
+              <?= $form->field($model, 'jenis')->dropDownList(ArrayHelper::map($katSQL->queryAll(),'id',
+                function($model, $defaultValue){
+                    return $model['jenis'];
+                }), [
+                'prompt' => 'Pilih Kategori(*)',
+                'tap' => Url::toRoute(['list-sub-kategori']),
+                'onchange' => "
+                  var val = $(this).val();
+
+                  $.ajax({
+                    url: $(this).attr('tap'),
+                    type: 'POST',
+                    data: 'id='+val,
+                    success: function(res){
+                      $('#produk-sub_kategori').html(res);
+                    }
+                  });
+                  return false;
+                "
+              ])->label(false) ?>
+            </div>
+            <div class="col-md-6">
+              <?= $form->field($model, 'sub_kategori')->dropDownList(ArrayHelper::map($subKatSQL,'id',
+                function($model, $defaultValue){
+                    return $model->title;
+                }), [
+                'prompt' => 'Pilih Sub Kategori (*)',
+              ])->label(false) ?>
+            </div>
+          </div>
 
           <?= $form->field($model, 'harga_jual')->textInput(['maxlength' => 15,'placeholder'=>"Harga Jual(*)"])->label(false) ?>
         </div>

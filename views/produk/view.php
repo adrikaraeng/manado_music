@@ -76,6 +76,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => $model->jenis0->jenis,
             ],
             [
+                'attribute' => 'sub_kategori',
+                'format' => 'raw',
+                'value' => $model->subKategori0->title,
+            ],
+            [
                 'attribute' => 'satuan',
                 'format' => 'raw',
                 'value' => function($model){

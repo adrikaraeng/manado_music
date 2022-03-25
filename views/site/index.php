@@ -137,6 +137,7 @@ $ip = Yii::$app->getRequest()->getUserIP();
     <?php endforeach;?>
     </ul>
     <?php Pjax::end(); ?>
+    
 
     <div style="clear:left;"></div>
 </div>

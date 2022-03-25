@@ -95,7 +95,7 @@ class SiteController extends Controller
 
         $model2 = new SearchPForm();
 
-        $query = Produk::find()->where("jenis='$id' AND aktivasi='Aktif'");
+        $query = Produk::find()->where("sub_kategori='$id' AND aktivasi='Aktif'");
         if($model2->load(Yii::$app->request->post())):
             $search = $_POST['SearchPForm']['search'];
 
@@ -106,7 +106,7 @@ class SiteController extends Controller
             if($search != '' || $search != NULL):
                 $model = $query->orderBy('nama ASC')
                     ->andFilterWhere(['like', 'nama', $search])
-                    ->andFilterWhere(['jenis'=> $id])
+                    ->andFilterWhere(['sub_kategori'=> $id])
                     ->andFilterWhere(['like', 'deskripsi', $search])
                     //->offset($pagination->offset)
                     ->all();
@@ -123,7 +123,7 @@ class SiteController extends Controller
                 'totalCount' => $query->count(),
             ]);
             $model = $query->orderBy('nama ASC')
-                    ->andFilterWhere(['jenis'=> $id])
+                    ->andFilterWhere(['sub_kategori'=> $id])
                     //->offset($pagination->offset)
                     ->limit($pagination->limit)
                     ->all();

@@ -13,6 +13,7 @@ use app\assets\AppAsset;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
 use app\models\Jenis;
+use app\models\SubKategori;
 use app\models\Profil;
 use app\models\Kontak;
 use yii\widgets\Pjax;
@@ -50,11 +51,22 @@ $ip = Yii::$app->getRequest()->getUserIP();
     <?php $this->head() ?>
 </head>
 <body class="skin-green sidebar-mini">
+  <style>
+    #kontak-url{
+      text-decoration: none;
+    }
+  </style>
 <?php $this->beginBody() ?>
 <div class="wrapper">
 
     <?= $this->render("//layouts/main-site")?>
-
+    <?php
+    // var_dump($role);
+      $item2 = Yii::$app->controller->action->id;
+      $item = Yii::$app->request->url;
+      $get_url_id = preg_replace('/[^0-9]/', '', $item); 
+      $side = $item2."?id=".$get_url_id;
+    ?>
     <div class="fixed-sidebar">
         <aside class="main-sidebar">
         <section class="sidebar">
@@ -70,10 +82,47 @@ $ip = Yii::$app->getRequest()->getUserIP();
                 <span class="sidebar-header" style="color:#fff;font-weight:bold;"><?=Yii::t('app','KATEGORI')?></span>
             </li>
             <?php foreach($kategori as $m => $mj):?>
-                <li style="white-space: normal">
+                <?php
+                  $sub_kategori = SubKategori::find()->where("jenis='$mj->id' AND aktivasi='Aktif'")->all();
+                  
+                  $cekSub = $connection->createCommand("SELECT * FROM sub_kategori WHERE id='$get_url_id'")->queryOne();
+
+                  // $cekJenis = $connection->createCommand("SELECT * FROM jenis WHERE id='$cekSub[jenis]'")->queryOne();
+
+                  if(!empty($get_url_id) && !empty($cekSub)):
+                    $cekJenis = $connection->createCommand("SELECT * FROM jenis WHERE id='$cekSub[jenis]'")->queryOne();
+                    if(!empty($cekJenis)):
+                      if($mj->id == $cekJenis['id'] && !empty(strpos($item, "side-kategori?id="))):
+                        $act = "active";
+                      else:
+                        $act = "";
+                      endif;
+                    else:
+                      $act = "";
+                    endif;
+                  else:
+                    $act = "";
+                  endif;
+                ?>
+                <li class="<?=$act?> treeview" style="white-space: normal">
                     <?=Html::a('<i class="fa fa-hand-o-right text-aqua" style="font-size:1.2em;"></i> <span>'.Yii::t('app',$mj->jenis).'</span>', 
                         Url::toRoute(['side-kategori','id'=>$mj->id])
                     );?>
+                    <?php if(!empty($sub_kategori)): ?>
+                      <ul class="treeview-menu">
+                      <?php foreach($sub_kategori as $sb => $skat):?>
+                        <?php
+                          $side_2 = "side-kategori?id=".$skat->id;
+                          if($side_2 == $side):
+                            $act2 = "active";
+                          else:
+                            $act2 = "";
+                          endif;
+                        ?>
+                        <li class="<?=$act2?>"><a href="<?= Url::toRoute(['side-kategori','id'=>$skat->id])?>"><i class="fa fa-circle-o"></i><?=Yii::t('app',$skat->title)?></a></li>
+                      <?php endforeach;?>
+                      </ul>
+                    <?php endif;?>
                 </li>
             <?php endforeach;?>
           </ul>
@@ -83,7 +132,7 @@ $ip = Yii::$app->getRequest()->getUserIP();
 
     <div class="content-wrapper">
         <div class="my-content">
-            <?= $content ?>
+          <?= $content ?>
         </div>
     </div>
     <div id="footer">
@@ -100,8 +149,14 @@ $ip = Yii::$app->getRequest()->getUserIP();
                         <table style="width:100%;">
                             <?php foreach($kontak as $k => $kk):?>
                             <tr>
-                                <td><?=$kk->jenis_kontak?></td>
-                                <td><?=$kk->kontak?></td>
+                                <?php if($kk->jenis_kontak == "<span class='fa fa-facebook'> Facebook</span>" || $kk->jenis_kontak == "<span class='fa fa-instagram'> Instagram</span>" || $kk->jenis_kontak == "<span class='fa fa-twitter'> Twitter</span>"):?>
+                                  <td>
+                                    <a id="kontak-url" href="<?=$kk->kontak?>" target="_blank"><?=$kk->jenis_kontak?></a>
+                                  </td>
+                                <?php else:?>
+                                  <td><?=$kk->jenis_kontak?></td>
+                                  <td><?=$kk->kontak?></td>
+                                <?php endif;?>
                             </tr>
                             <?php endforeach;?>
                         </table>

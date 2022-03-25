@@ -50,6 +50,13 @@ AppAsset::register($this);
               Url::toRoute(['/jenis/index'])
             );?>
           </li>
+
+          <li>
+            <?=Html::a('<i class="fa fa-database text-blue"></i> <span class="text-blue">'.Yii::t('app','SUB KATEGORI').'</span>', 
+              Url::toRoute(['/sub-kategori/index'])
+            );?>
+          </li>
+
           <li>
             <?=Html::a('<i class="fa fa-laptop text-aqua"></i> <span class="text-aqua">'.Yii::t('app','PRODUK').'</span>', 
               Url::toRoute(['/produk/index'])

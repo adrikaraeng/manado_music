@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Produk;
+use app\models\SubKategori;
 
 /**
- * ProdukSearch represents the model behind the search form about `app\models\Produk`.
+ * SatuanSearch represents the model behind the search form about `app\models\Satuan`.
  */
-class ProdukSearch extends Produk
+class SubKategoriSearch extends SubKategori
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class ProdukSearch extends Produk
     public function rules()
     {
         return [
-            [['id', 'satuan', 'berat'], 'integer'],
-            [['nama', 'jenis', 'barcode', 'harga_jual', 'deskripsi', 'aktivasi', 'tanggal_input', 'sub_kategori'], 'safe'],
+            [['id'], 'integer'],
+            [['jenis', 'title', 'aktivasi', 'keterangan'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class ProdukSearch extends Produk
      */
     public function search($params)
     {
-        $query = Produk::find();
+        $query = SubKategori::find();
 
         // add conditions that should always apply here
 
@@ -57,23 +57,17 @@ class ProdukSearch extends Produk
             return $dataProvider;
         }
 
-        $query->joinWith("subKategori0");
-        $query->joinWith("jenis0");
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'satuan' => $this->satuan,
-            'berat' => $this->berat
+            'sub_kategori.aktivasi' => $this->aktivasi
         ]);
 
-        $query->andFilterWhere(['like', 'barcode', $this->barcode])
-            ->andFilterWhere(['like', 'harga_jual', $this->harga_jual])
-            ->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'deskripsi', $this->deskripsi])
-            ->andFilterWhere(['like', 'jenis.jenis', $this->jenis])
-            ->andFilterWhere(['like', 'sub_kategori.title', $this->sub_kategori])
-            ->andFilterWhere(['like', 'produk.aktivasi', $this->aktivasi])
-            ->andFilterWhere(['like', 'tanggal_input', $this->tanggal_input]);
+        $query->joinWith("jenis0");
+
+        $query->andFilterWhere(['like', 'jenis.jenis', $this->jenis])
+            ->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'keterangan', $this->keterangan]);
 
         return $dataProvider;
     }
