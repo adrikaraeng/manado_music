@@ -12,6 +12,7 @@ use yii\web\Controller;
 use yii\web\UploadedFile;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\widgets\ActiveForm;
 
 /**
  * ProdukController implements the CRUD actions for Produk model.
@@ -63,18 +64,17 @@ class ProdukController extends Controller
      */
     public function actionIndex()
     {
-        if (Yii::$app->user->isGuest):
-            Yii::$app->user->logout();
-            return $this->goHome();
-        endif;
-        $this->layout="admin";
-        $searchModel = new ProdukSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+      if (Yii::$app->user->isGuest):
+          Yii::$app->user->logout();
+          return $this->goHome();
+      endif;
+      $this->layout="admin";
+      $searchModel = new ProdukSearch();
+      $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+      return $this->render('index', [
+          'searchModel' => $searchModel,
+          'dataProvider' => $dataProvider
+      ]);
     }
 
     /**
@@ -96,13 +96,17 @@ class ProdukController extends Controller
             'gambar' => ProdukGambar::find()->where("produk='$model->id'")->all(),
         ]);
     }
+    
 
-    /**
-     * Creates a new Produk model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    //Fungsi untuk save produk baru
+    public function actionAjaxCeksimpan()
+    {
+      $model = new Produk();
+      if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())):
+        Yii::$app->response->format = 'json';
+        return ActiveForm::validate($model);
+      endif;       
+    }
+
     public function actionCreate()
     {
         if (Yii::$app->user->isGuest):

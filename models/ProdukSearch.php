@@ -18,8 +18,8 @@ class ProdukSearch extends Produk
     public function rules()
     {
         return [
-            [['id', 'satuan', 'berat'], 'integer'],
-            [['nama', 'jenis', 'barcode', 'harga_jual', 'deskripsi', 'aktivasi', 'tanggal_input', 'sub_kategori'], 'safe'],
+            [['id', 'satuan', 'berat', 'barcode'], 'integer'],
+            [['nama', 'jenis', 'harga_jual', 'deskripsi', 'aktivasi', 'tanggal_input', 'sub_kategori'], 'safe'],
         ];
     }
 

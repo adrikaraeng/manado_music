@@ -22,7 +22,12 @@ $subKatSQL = SubKategori::find()->where("aktivasi='Aktif' AND jenis='$model->jen
 
 <div class="produk-form" style="background-color:#dce3ed;padding:8px;">
 
-  <?php $form = ActiveForm::begin(['id' => 'form-wilayah', 'options' => ['enctype' => 'multipart/form-data']]); ?>
+  <?php $form = ActiveForm::begin([
+    'id' => 'form-wilayah',
+    'options' => ['enctype' => 'multipart/form-data'],
+    'enableAjaxValidation' => true,
+    'validationUrl' => Url::toRoute(['/produk/ajax-ceksimpan', 'id'=>$model->id]),
+  ]); ?>
 
     <div class="row">
       <div class="col-md-12">
@@ -36,7 +41,9 @@ $subKatSQL = SubKategori::find()->where("aktivasi='Aktif' AND jenis='$model->jen
           </div>
         </div>
         <div class="col-md-6">
-          <?= $form->field($model, 'nama')->textInput(['maxlength'=>40,'placeholder'=>'Nama Produk(*)'])->label(false) ?>
+          <?= $form->field($model, 'nama')->textInput([
+            'maxlength'=>40,'placeholder'=>'Nama Produk(*)'
+          ])->label(false) ?>
 
           <div class="row">
             <div class="col-md-6">
@@ -75,9 +82,12 @@ $subKatSQL = SubKategori::find()->where("aktivasi='Aktif' AND jenis='$model->jen
         </div>
 
         <div class="col-md-6">
-          <?= $form->field($model, 'berat')->textInput(['type'=>'number','maxlength' => 15,'placeholder'=>'Berat dalam satuan gram(*)'])->label(false) ?>
-
-          <?= $form->field($model, 'barcode')->textInput(['maxlength' => 15,'placeholder'=>'Barcode'])->label(false) ?>
+          <?= $form->field($model, 'berat')->textInput(['maxlength' => 15,'placeholder'=>'Berat dalam satuan gram(*)'])->label(false) ?>
+<!-- Revisi No. 4 -->
+          <?= $form->field($model, 'barcode')->textInput([
+            'maxlength' => 15,
+            'placeholder'=>'Barcode',
+          ])->label(false) ?>
 
           <?= $form->field($model, 'aktivasi')->dropDownList([ 
               'Aktif' => 'Aktif',
@@ -149,10 +159,10 @@ $subKatSQL = SubKategori::find()->where("aktivasi='Aktif' AND jenis='$model->jen
                 'pluginOptions' => [
                     'previewFileType' => ['image','text'],
                     'showUpload' => false,
-                    'showRemove' => false,
+                    'showRemove' => true,
                     'showCaption' => false,
                     'allowedFileExtensions' => ['jpg','jpeg','png','mp4'],
-                    'maxFileSize'=>15360,
+                    'maxFileSize' => 15360,
                     'maxFileCount' => 5,
                     'buttonLabelClass' => false,
                     'previewFileIcon' => '<i class="fa fa-photo"></i>',

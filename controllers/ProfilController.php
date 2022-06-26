@@ -29,12 +29,15 @@ class ProfilController extends Controller
     public function actionIndex()
     {
         $this->layout="admin";
+        $connection = Yii::$app->db;
         $searchModel = new ProfilSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $cek_data = $connection->createCommand("SELECT * FROM profil LIMIT 1")->queryOne();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'cek_date' => $cek_data
         ]);
     }
 
@@ -51,7 +54,7 @@ class ProfilController extends Controller
         $this->layout="admin";
         $model = new Profil();
 
-        if ($model->load(Yii::$app->request->post())) {
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             if($model->save()):
                 echo 1;
             else:

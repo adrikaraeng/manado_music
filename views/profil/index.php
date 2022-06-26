@@ -27,11 +27,13 @@ $this->registerJs("
     </div>
 <?php endif;?>
 <div class="profil-index">
-
+  <?php Pjax::begin(['id'=>'pjx-profil-index', 'enablePushState'=>false]); ?>
+  
+  <?php if(empty($cek_date)):?>
     <p>
         <?= Html::button(Yii::t('app', 'Tambah Profil'), ['value' => Url::to('create'), 'class' => 'btn btn-success', 'id' => 'modalButton'])?>
     </p>
-
+  <?php endif;?>
     <?php
         $this->registerJs("
             $('#myModal').on('show.bs.modal', function (event) {
@@ -68,7 +70,7 @@ $this->registerJs("
 
         Modal::end();
     ?>
-<?php Pjax::begin(['id'=>'pjx-profil-index', 'enablePushState'=>false]); ?>    
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
