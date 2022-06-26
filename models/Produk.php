@@ -40,9 +40,11 @@ class Produk extends \yii\db\ActiveRecord
         return [
             [['nama', 'jenis', 'satuan', 'berat', 'harga_jual', 'tanggal_input', 'deskripsi', 'aktivasi', 'sub_kategori'], 'required','message' => ''],
             // [['nama'], 'unique', 'message' => 'Already exist'],
-            [['nama'], 'unique',
-                'targetAttribute' => ['nama'],
-                'message' => 'Already exist'
+            [
+              ['nama'], 'unique',
+              'on' => ['create'],
+              'targetAttribute' => ['nama'],
+              'message' => 'Already exist'
             ],
             [['jenis', 'sub_kategori', 'satuan', 'berat', 'barcode'], 'integer', 'message'=> 'Must be number'],
             [['gambar','file'],
@@ -58,7 +60,6 @@ class Produk extends \yii\db\ActiveRecord
             [['jenis'], 'exist', 'skipOnError' => true, 'targetClass' => Jenis::className(), 'targetAttribute' => ['jenis' => 'id']],
         ];
     }
-
     /**
      * @inheritdoc
      */

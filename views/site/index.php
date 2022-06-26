@@ -17,7 +17,11 @@ $this->registerJs("
 
 $ip = Yii::$app->getRequest()->getUserIP();
 ?>
-
+<style>
+video {
+    object-fit: fill;
+}
+</style>
 <?php if( Yii::$app->session->hasFlash('success') ):?>
     <div class="alert alert-success" id="sukses" style="bottom:0;position:fixed;">
         <?= Yii::$app->session->getFlash('success')?>

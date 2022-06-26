@@ -29,20 +29,20 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-md-12">
               <?php if($query["gambar"] != NULL): ?>
                 <div id="full-size">
-                <?php
-                  $path2 = Yii::$app->request->baseUrl."/gambar/produk/".$query['gambar'];
-                  $file_parts2 = pathinfo($path2);
-                  if($file_parts2['extension'] == "mp4"):?>                
-                  <video class='ft-form-produk' controls>
-                    <source src="<?=$path2?>" type="video/mp4">
-                  </video>
-                  <img style="display:none;" src='' class='ft-view-produk'>
-                <?php else:?>
-                  <img src='<?php echo Yii::$app->request->baseUrl; ?>/gambar/produk/<?=$query["gambar"]?>' class='ft-view-produk'>
-                  <video style="display:none;" class='ft-view-produk' controls>
-                    <source src="" type="video/mp4">
-                  </video>
-                <?php endif;?>
+                  <?php
+                    $path2 = Yii::$app->request->baseUrl."/gambar/produk/".$query['gambar'];
+                    $file_parts2 = pathinfo($path2);
+                    if($file_parts2['extension'] == "mp4"):?>                
+                    <video class='ft-form-produk-2' controls>
+                      <source src="<?=$path2?>" type="video/mp4">
+                    </video>
+                    <img style="display:none;" src='' class='ft-view-produk'>
+                  <?php else:?>
+                    <img src='<?php echo Yii::$app->request->baseUrl; ?>/gambar/produk/<?=$query["gambar"]?>' class='ft-view-produk'>
+                    <video style="display:none;" class='ft-view-produk' controls>
+                      <source src="" type="video/mp4">
+                    </video>
+                  <?php endif;?>
                 </div>
               <?php else:?>
                   <span class='fa fa-image ft-view-produk' id="full-size" style="font-size:13em;color:#ccc;"></span>
@@ -55,14 +55,15 @@ $this->params['breadcrumbs'][] = $this->title;
                   $file_parts = pathinfo($path);
                   if($file_parts['extension'] == "mp4"):?>
                     <span>
-                    <video id="<?=$gbr->id?>" src="<?=$path?>" class='ft-site-view-produks' onclick="
-                      $('#full-size').find('video').find('source').attr('src',$(this).attr('src'));
-                      $('#full-size').find('video').load();
-                      $('#full-size').find('video').get(0).play();
-                      $('#full-size video').show();
-                      $('#full-size img').hide();
-                  ">
-                    </video>
+                      <video id="<?=$gbr->id?>" src="<?=$path?>" class='ft-site-view-produks-2' onclick="
+                        $('#full-size').find('video').find('source').attr('src',$(this).attr('src'));
+                        $('#full-size').find('video').load();
+                        $('#full-size').find('video').get(0).play();
+                        $('#full-size video').show();
+                        $('#full-size img').hide();
+                      ">
+                      </video>
+                    </span>
                     <span style="cursor:pointer;position:absolute;margin-left:-60px;margin-top:20px;color:#fff;" onclick="
                       var videoID = $('#<?=$gbr->id?>');
                       var videoID = videoID.selector;

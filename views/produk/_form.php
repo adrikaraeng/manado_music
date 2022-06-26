@@ -26,7 +26,7 @@ $subKatSQL = SubKategori::find()->where("aktivasi='Aktif' AND jenis='$model->jen
     'id' => 'form-wilayah',
     'options' => ['enctype' => 'multipart/form-data'],
     'enableAjaxValidation' => true,
-    'validationUrl' => Url::toRoute(['/produk/ajax-ceksimpan', 'id'=>$model->id]),
+    'validationUrl' => Url::toRoute($validateUrl),
   ]); ?>
 
     <div class="row">
@@ -42,7 +42,8 @@ $subKatSQL = SubKategori::find()->where("aktivasi='Aktif' AND jenis='$model->jen
         </div>
         <div class="col-md-6">
           <?= $form->field($model, 'nama')->textInput([
-            'maxlength'=>40,'placeholder'=>'Nama Produk(*)'
+            'maxlength'=>40,'placeholder'=>'Nama Produk(*)',
+            // 'readOnly' => $readonly
           ])->label(false) ?>
 
           <div class="row">
@@ -155,7 +156,10 @@ $subKatSQL = SubKategori::find()->where("aktivasi='Aktif' AND jenis='$model->jen
 
             <?=
               $form->field($model, 'gambar[]')->widget(FileInput::classname(), [
-                'options' => ['id' => 'gambar','multiple' => true, 'accept' => ['image/*', 'video/*']],
+                'options' => [
+                  'id' => 'gambar','multiple' => true,
+                    'accept' => '.jpg, .jpeg, .png, video/mp4',
+                  ],
                 'pluginOptions' => [
                     'previewFileType' => ['image','text'],
                     'showUpload' => false,

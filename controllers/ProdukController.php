@@ -97,10 +97,19 @@ class ProdukController extends Controller
         ]);
     }
     
-
     public function actionAjaxCeksimpan()
     {
-      $model = new Produk();
+      $model = new Produk;
+      $model->scenario="create";
+      if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())):
+        Yii::$app->response->format = 'json';
+        return ActiveForm::validate($model);
+      endif;       
+    }
+    public function actionAjaxCekUpdateSimpan()
+    {
+      $model = new Produk;
+      // $model->scenario="update";
       if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())):
         Yii::$app->response->format = 'json';
         return ActiveForm::validate($model);
@@ -110,21 +119,24 @@ class ProdukController extends Controller
     public function actionCreate()
     {
         if (Yii::$app->user->isGuest):
-            Yii::$app->user->logout();
-            return $this->goHome();
+          Yii::$app->user->logout();
+          return $this->goHome();
         endif;
         $this->layout="admin";
-        $model = new Produk();
+        $model = new Produk;
+        // $model->scenario="create";
 
         if ($model->load(Yii::$app->request->post())) {
 
             $gambar = UploadedFile::getInstances($model,'gambar');
             $model->tanggal_input = date('Y-m-d H:i:s');
             $model->satuan = "1";
-            $model->save(false);
-            if($gambar != NULL):
-                $i=1;
-                foreach( $gambar as $g => $gbr ):
+            
+            if($model->save(false)):
+              Yii::$app->session->setFlash('success', "Successfully.");
+              if($gambar != NULL):
+                  $i=1;
+                  foreach( $gambar as $g => $gbr ):
                     $imageName = date('Ymdhis'.$i);
                     $model2 = new ProdukGambar();
 
@@ -134,15 +146,21 @@ class ProdukController extends Controller
                     $model2->gambar = $imageName.'.'.$gbr->extension;
                     $model2->save();
                     $i++;
-                endforeach;
+                  endforeach;
+              endif;
+            else:
+              Yii::$app->session->setFlash('error', "Failed, please try again.");
             endif;
 
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('create', [
-                'model' => $model,
-                'bmodel' => null,
-            ]);
+          $validateUrl = ['/produk/ajax-ceksimpan', 'id'=>$model->id];
+          return $this->render('create', [
+              'model' => $model,
+              'bmodel' => null,
+              'validateUrl' => $validateUrl
+              // 'readonly' => $readonly
+          ]);
         }
     }
 
@@ -160,33 +178,50 @@ class ProdukController extends Controller
         endif;
         $this->layout="admin";
         $model = $this->findModel($id);
+        // $model->scenario = "update";
+        $connection = \Yii::$app->db;
 
         if ($model->load(Yii::$app->request->post())) {
 
+            $sql = $connection->createCommand("SELECT * FROM produk WHERE nama='$model->nama' AND id='$id'")->queryOne();
+            $sql_2 = $connection->createCommand("SELECT * FROM produk WHERE nama='$model->nama' AND id<>'$id'")->queryAll();
+
             $gambar = UploadedFile::getInstances($model,'gambar');
             $model->tanggal_input = date('Y-m-d H:i:s');
-            $model->save();
-            if($gambar != NULL):
+
+            if(!empty($sql) || empty($sql_2)):
+              $model->save(false);
+              Yii::$app->session->setFlash('success', "Successfully.");
+            
+              if($gambar != NULL):
                 $i=1;
                 foreach( $gambar as $g => $gbr ):
                     $imageName = date('Ymdhis'.$i);
                     $model2 = new ProdukGambar();
-
+  
                     $gbr->saveAs('gambar/produk/'.$imageName.'.'.$gbr->extension);
-
+  
                     $model2->produk = $model->id;
                     $model2->gambar = $imageName.'.'.$gbr->extension;
                     $model2->save();
                     $i++;
                 endforeach;
+              endif;
+              
+              return $this->redirect(['view', 'id' => $model->id]);
+            else:
+              Yii::$app->session->setFlash('error', $model->nama." already exist.");
+              return $this->redirect(['update','id'=>$id]);
             endif;
 
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             $bmodel = ProdukGambar::find()->where("produk='$id'")->all();
+            $validateUrl = ['/produk/ajax-cek-update-simpan', 'id'=>$model->id];
             return $this->render('update', [
                 'model' => $model,
-                'bmodel' => $bmodel
+                'bmodel' => $bmodel,
+                'validateUrl' => $validateUrl
             ]);
         }
     }

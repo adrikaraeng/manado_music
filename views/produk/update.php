@@ -13,10 +13,22 @@ $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' 
 $this->params['breadcrumbs'][] = Yii::t('app', 'Edit');
 ?>
 <div class="produk-update">
+  <?php if (Yii::$app->session->hasFlash('success')): ?>
+    <div class="alert alert-success alert-dismissable">
+      <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+      <?= Yii::$app->session->getFlash('success') ?>
+    </div>
+  <?php endif; ?>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-        'bmodel' => $bmodel
-    ]) ?>
-
+  <?php if (Yii::$app->session->hasFlash('error')): ?>
+    <div class="alert alert-danger alert-dismissable">
+      <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+      <?= Yii::$app->session->getFlash('error') ?>
+    </div>
+  <?php endif; ?>
+  <?= $this->render('_form', [
+    'model' => $model,
+    'bmodel' => $bmodel,
+    'validateUrl' => $validateUrl
+  ]) ?>
 </div>

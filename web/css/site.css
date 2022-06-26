@@ -189,12 +189,21 @@ body {
 .ft-site-view-produks{
     width: 90px;
     max-height: 100px;
+    clear:left;
+    cursor: pointer;
+    margin-bottom: 4px;
+    margin-left: 3px;
+}
+.ft-site-view-produks-2{
+    width: 90px;
+    max-height: 100px;
     height:100%;
     clear:left;
     cursor: pointer;
     margin-bottom: 4px;
     margin-left: 3px;
 }
+
 .jenis-search{
     position: fixed;
     margin-top:-60px;
@@ -310,6 +319,13 @@ ul.pagination li.next{
     padding:5px;
     float:left;
     margin-left:10px;
+    border: 0.5px solid #d8d8d8;
+}
+.ft-form-produk-2{
+    height: 300px;
+    width: 100%;
+    padding:5px;
+    float:left;
     border: 0.5px solid #d8d8d8;
 }
 .gbr-produk-sml{
