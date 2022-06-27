@@ -100,7 +100,7 @@ $subKatSQL = SubKategori::find()->where("aktivasi='Aktif' AND jenis='$model->jen
         <div class="col-md-12">
           <?= $form->field($model, 'deskripsi')->widget(CKEditor::className(), [
             'options' => ['rows' => 6,'placeholder'=>'Isi Deskripsi'],
-            'preset' => 'basic',
+            'preset' => 'advanced',
             'clientOptions' => [
                 'allowedContent' => true,
                 'autoParagraph' => false
